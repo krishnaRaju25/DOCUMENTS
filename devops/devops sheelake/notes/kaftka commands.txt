@@ -1,0 +1,51 @@
+
+KAFKA SETUP AND COMMANDS
+
+
+
+Procedure to install Kafka and setup
+
+    • https://kafka.apache.org/
+    • Download Kafka-->   Scala 2.12  - kafka_2.12-2.8.1.tgz (asc, sha512)
+    • extract the files using 7zip
+    • click on extracted folder(better to keep the extracted folder in c drive)
+    • create a new folder named logs
+    • enter into logs folder create 2 folder klogs and zlogs
+    • enter into klogs folder copy the path
+    • open server file (with VS Code Editor) present inside config folder paste the copied klogs path in (60th line) logs.dirs field and save the file
+    • Now again enter into zlogs copy the path
+    • open zookeeper file (with VS Code Editor) present inside config folder paste the copied zlogs path in dataDir field and save the file
+    • now enter into bin->windows path open cmd (in this path)
+    • first start the zookeeper server
+    • again open another cmd and start kafka server
+    • open another cmd and create topic
+    • open another cmd create producer
+    • open another cmd and create consumer 
+NOTE: whatever messages typed in producer should be reflected in consumer cmd
+
+
+
+#COMMAND TO START ZOO-KEEPER
+zookeeper-server-start.bat ../../config/zookeeper.properties
+
+
+#COMMAND TO START KAFKA SERVER
+kafka-server-start.bat ../../config/server.properties
+
+
+#COMMAND TO CREATE TOPIC
+kafka-topics.bat --create –topic topic-name --bootstrap-server localhost:9092
+
+
+#COMMAND TO SET PATH
+JAVA_HOME=/usr/lib/jvm/java-11-oracle/ bin/kafka-server-start.sh config/server.properties
+
+
+#COMMAND TO CREATE CONSUMER
+kafka-console-consumer.bat --topic topic-name --bootstrap-server localhost:9092
+
+
+
+#COMMAND TO CREATE PRODUCER
+kafka-console-producer.bat --topic topic-name --bootstrap-server localhost:9092
+

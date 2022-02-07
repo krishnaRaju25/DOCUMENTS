@@ -1,0 +1,37 @@
+1. launch 
+2. login
+3. click flights
+4. chage arrival city
+5. select seating preference to window
+6. click continue
+7. click continue 
+8. first name: ravi
+9. credit card numer: 12345678
+10. click continue
+11. click home
+12. logout
+ 
+---------------------
+ 
+1. luanch
+2. login
+3. continue1_findflights
+4. continue2
+5. continue3 at payment details
+6. clikc home
+7. logout
+ 
+---------------
+1. record script for above 7 transactions
+2. select all transactions and check generate parent samples
+3. make proper transaction names
+4. create csv data sheet for login names and passwords - parameterization
+5. do the correlation again for session id
+6. create assertions for login and for any other transactions
+7. create raw result file with .csv extension
+8. add custom graphs to the Ultimate threadgroup
+8. start test with 5 users and hold load for 60 seconds
+9. save table data and create a results in excel and format with some colors
+10. create HTML report for raw result file
+-------------------------------------------------
+11. execute test in non gui command mode. 

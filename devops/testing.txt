@@ -1,0 +1,275 @@
+Life cycle of Performance testing:
+--------------------------------------
+1. Requirements gathering
+ 
+2. Planning/Design
+ 
+3. Test execution
+ 
+4. Result analysis
+ 
+----------------------------------------
+ 
+1. Requirements gathering. 
+ 
+. what is the application we are going to test -
+. how much user load need to be tested
+. what is the functionality of the application. why it is bulit
+. what is the technology used to build the application
+. what is the server architecture
+. Hardware details of application environment. 
+ 
+
+what is the application we are going to test - e commerce application, ticket booking application, banking apploicaion, telceom application
+ 
+how much user load need to be tested - 1000 users per hour, 10000 users per day. 
+ 
+what is the functionality of the application. why it is bulit - basci user functionality
+ 
+what is the technology used to build the application - Java, database ( Oracle/SQL ), what OS this is deployed
+ 
+what is the server architecture - what type of app server is used ( web logic, web sphere etc), what type of web server (apache tomcat, glassfish ) is used
+ 
+hardware details - app server, web server, db serever ( what amount of Memory each server is having installed ( 32 GB RAM ) webs erver ( 16 GB RAM ), DB server ( 100 GB RAM )
+applicationserver ( 16 core cpu , processor) web server ( 8 core cpu ) DB server ( 32 core cpu ) 
+ 
+--------------------------------------------------------------------------------------------------------
+ 
+2. Planning/Design
+ 
+. how many no of tests will be executed
+. what type of performanc metrics to be collected
+. what is the timelines 
+ 
+----------------------------------------------------------------------------
+3. Test execution 
+ 
+. create test scenarios
+. tester will execute all PT activities
+. collect results of all tests
+------------------------------------------------------
+4. Reporting'
+. create test reports
+. analyse test reports
+. find any performance issues.
+-----------------------------------------------------------------
+
+
+27/10
+
+   co-relation
+  
+
+1. complete recording
+2. check generate parent samples on all transactions
+3. go to threadgroup
+4. keep 1 user, 0 rampup, 1 loop count
+5. add viewresultstree/aggregatereport to the threadgroup
+6. replay script
+7. go to viewresultstree and check request of login request and see if j2ee and j2ee is going with request.
+8. go to response of login request - check for message "you have reached this page incorrectly"
+9. go to 3rd login request -> go to its response and check welcome message is there or not
+10. go to the login request from the script
+11. copy the name 1 
+12. go to replay resultsrtree
+13. select 1st laucnh request and select responsedata tab and response body under responsedata
+14. paste your usersessionname and click find -> you shouls see that search is failed.
+15. go to next subsequent requests and search for usersession name until you find a result.
+16.you should see usesession value is available in last "launch" request.
+17. copy the user session line (ex:  <input type="hidden" name="userSession" value="132468.184285136ziVDiDcpccQVzzzHtAiicpQQDDHf"/>)
+18. go to the text layout and select "Regularexpressiontester".
+19. paste you copied line in Regularexpressiontester and should see a result in below
+20. remove the only session value from the text line.
+21. add (.*?) in the text line -> <input type="hidden" name="userSession" value="(.*?)"/>
+22. click test button and you should see a results like " Match[1][1]=132468.184285136ziVDiDcpccQVzzzHtAiicpQQDDHf "
+23. copy the successful expression
+24. go to the last laucnh request from the script
+25. right click on launch request -> add-> post processor-> RegularexpressExtractor
+26. go to the regular expression text box and paste expression ( ex: "<input type="hidden" name="userSession" value="(.*?)"/>")
+27. enter name of created variable as " TOKID"
+28. Template as $1$
+29. enter match no as 1
+30. enter default value as TokID_NOTFOUND
+31. go to the 1st login request
+32. remove the user session value
+33. and replace with ${TokID}
+34. save your script
+35. replay
+36. chek the response of login requests from viewresultstree
+
+
+think time:
+
+1. go to every transaction and select first request withinn the transaction
+
+2. right click on request
+
+3. add-> timer->constant timer
+
+4. mention your think time in milli seconds --------------------------------------------
+
+add plugin manager to jmeter:
+
+1. google - donwload jmeter plugin manager
+
+2. got to the 1st link
+
+3. clikc on install on webpage
+
+4. click on pluginmanager.jar file - it will be downloaded
+
+5. copy the pluginmanager.jar file to jmeter/lib/ext folder
+
+6. restart jmeter
+
+7. open jmeter -> open your script
+
+8. clikc on options from jmeter main menu
+
+9. you should see pluginmanager available at last
+
+10.clikc on pluginmanager
+
+11. go to available plugins tab
+
+12. search for thread
+
+13. select customthreadgroups option
+
+14. click apply changes and restart button at bottom
+
+15. then open jmeter again
+
+16. open your script
+
+17. right click on Testplan
+
+18. add-> Threads -> J@pc Ultimate threadgroup
+
+19. copy recording controller from regular threadgroup and paste on ultimate threadgroup.
+
+20. then create your scenario
+
+ 28/10
+   
+get and post
+
+
+[12:37] Ravi (Guest)
+1. 3 basic graphs
+
+- open plugin manager in jmeter
+
+- go to available plugins
+
+- select 3 basic graphs
+
+- click apply changes restart
+
+- open jmeter
+
+-open script
+
+- right click on threadgroup
+
+- add-> listeners->jp@gc Active threads over time
+
+- add-> listeners->jp@gc Response times over time
+
+- start your test
+
+- check if graphs are updating in run time
+
+[12:49] Ravi (Guest)
+2. Assertions 
+
+- find out a valid resposne message from any request ( ex:login request will have a message like "user password is correct"
+
+- then go to the request, right clikc on request, add->assertions->response assertions
+
+- click on ADD button on response addertion
+
+- paste your response message to the text box
+
+- start test with wrong usename and password and check if script is failing
+
+ 3. Non Gui mode execution of jmeter
+
+- create a scrpt with 1 user and hold load for 60 seconds and rampup is 0
+
+- close jmeter
+
+- open cmd
+
+- go to the jmeter bin path and copy the path
+
+- type "cd bin path" on cmd
+
+- copy the jmx file path
+
+- go to cmd and ( " jmeter -n -t pathofthescript\filename.jmx -l pathtotheresultfile\filename.csv " )
+
+- you should see message on command window as "waiting for samples"
+
+- you should see the results file created in the location with .csv extension 
+
+
+4. Loop controller
+
+- assume a scenario where you have to execute a test with 2 users, and run launch and logout once per user and login is 3 times per user
+
+- select Login ransaction 
+
+- right click on login transacton -> add -> logic controllers -> Loop controller
+
+- copy your recording controller to Loop controller
+
+- select loop controller and make loop count as 3
+
+- keep thread settings as no of threads 3, hold load for 15 mins
+
+- start your test
+
+
+
+29/10
+5 HTML report generation:
+
+1. generate a raw result file by running a sample test
+2. raw result file should be generated with .csv extension
+3. create and empty folder for HTML results
+4. open cmd
+5. cd to jmeter bin folder
+6. then execute below command
+7. jmeter -g path_to_the .csv file -o path_to_the_emplty_folder
+8. just run the command
+9. you will see HTML file generated in empty folder.
+
+
+
+how to create REST service script in jmeter.
+------------------------------------------
+1. open new jmeter window
+2. right click on Testplan
+3. add->threads->Threadgroup
+4. right click on Threadgroup
+5. add-> Logic controller->Transaction controller
+6. right click on Transaction controller
+7. add-> sampler-> Http Request
+8. select http request from jmeter
+9. copy server name to the request text box
+10. change protocol to https
+11. copy url to the path text box
+12. check generate parant samples for all transaction controllers
+14. add view results tree and aggregate report
+15. run script with 1 user and check if request and response coming
+
+
+------------------------------------------------------------------------------
+16. build request for     http://dummy.restapiexample.com/api/v1/employee/1
+17. right click on transaction controller and add->config element-> counter
+18. make changes to the counter as in screen shot
+19. use the varaiable name from counter in request url
+20. run test with 2 users, chekc if counter is working or not.
+
+
